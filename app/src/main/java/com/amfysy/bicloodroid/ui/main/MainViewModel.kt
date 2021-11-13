@@ -1,7 +1,30 @@
 package com.amfysy.bicloodroid.ui.main
 
+import androidx.databinding.ObservableArrayList
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.amfysy.bicloodroid.data.repositories.BiclooRecordsRepository
+import com.amfysy.bicloodroid.ui.shared.BiclooRecordViewModel
+import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
+    val biclooRecords = ObservableArrayList<BiclooRecordViewModel>()
+
+    init {
+        this.viewModelScope.launch {
+            loadData()
+        }
+    }
+
+    private suspend fun loadData() {
+        val biclooRecordsRepository = BiclooRecordsRepository()
+        biclooRecordsRepository.getRecords().onFailure {
+            // TODO: Display some error message
+        }.onSuccess { records ->
+            biclooRecords.clear()
+            records
+                .map { BiclooRecordViewModel(it) }
+                .let(biclooRecords::addAll)
+        }
+    }
 }
