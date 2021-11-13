@@ -4,6 +4,9 @@ plugins {
     id 'kotlin-kapt'
 }
 
+Properties secrets = new Properties()
+secrets.load(project.rootProject.file("secrets.properties").newDataInputStream())
+
 android {
     compileSdk 31
 
@@ -15,6 +18,8 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+    resValue "string", "mapbox_access_token", secrets.getProperty("MAPBOX_ACCESS")
     }
 
     buildTypes {
@@ -44,6 +49,8 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0'
+
+    implementation 'com.mapbox.maps:android:10.1.0'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

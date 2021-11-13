@@ -1,12 +1,12 @@
 package com.amfysy.bicloodroid.ui.main
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.amfysy.bicloodroid.R
+import androidx.fragment.app.Fragment
+import com.amfysy.bicloodroid.databinding.MainFragmentBinding
+import com.mapbox.maps.Style
 
 class MainFragment : Fragment() {
 
@@ -14,19 +14,17 @@ class MainFragment : Fragment() {
         fun newInstance() = MainFragment()
     }
 
-    private lateinit var viewModel: MainViewModel
+    private lateinit var mainFragmentBinding: MainFragmentBinding
+    private var viewModel: MainViewModel = MainViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.main_fragment, container, false)
+        this.mainFragmentBinding = MainFragmentBinding.inflate(inflater)
+        return mainFragmentBinding.apply {
+            this.datacontext = viewModel
+            this.mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS)
+        }.root
     }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
-
 }
