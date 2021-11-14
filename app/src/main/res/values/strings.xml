@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">BiclooDroid</string>
+    <plurals name="n_available_places">
+        <item quantity="zero">Aucune place</item>
+        <item quantity="one">%d place</item>
+        <item quantity="other">%d places</item>
+    </plurals>
 </resources>

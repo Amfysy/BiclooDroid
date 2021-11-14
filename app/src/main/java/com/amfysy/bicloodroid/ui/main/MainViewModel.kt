@@ -1,6 +1,7 @@
 package com.amfysy.bicloodroid.ui.main
 
 import androidx.databinding.ObservableArrayList
+import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.amfysy.bicloodroid.data.repositories.BiclooRecordsRepository
@@ -9,6 +10,7 @@ import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
     val biclooRecords = ObservableArrayList<BiclooRecordViewModel>()
+    val selectedRecord = ObservableField<BiclooRecordViewModel>()
 
     init {
         this.viewModelScope.launch {
@@ -26,5 +28,9 @@ class MainViewModel : ViewModel() {
                 .map { BiclooRecordViewModel(it) }
                 .let(biclooRecords::addAll)
         }
+    }
+
+    fun pinClicked(selectedBiclooRecord: BiclooRecordViewModel) {
+        selectedRecord.set(selectedBiclooRecord)
     }
 }
