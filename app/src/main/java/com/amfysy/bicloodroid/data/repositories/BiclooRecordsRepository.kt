@@ -20,6 +20,7 @@ class BiclooRecordsRepository {
                 call.execute().body() ?: return@withContext Result.failure(Exception("Empty Body"))
             recordsResponse.records.map { recDto ->
                 BiclooRecord(
+                    recDto.fields.nom,
                     recDto.fields.geoShape.coordinates[0],
                     recDto.fields.geoShape.coordinates[1],
                     recDto.fields.capaciteNum
